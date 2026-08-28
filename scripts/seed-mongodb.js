@@ -13,7 +13,6 @@ if (!uri) {
 
 const seed = async () => {
     const client = new MongoClient(uri);
-    // Reads the inventory.json file from your main folder
     const inventory = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'inventory.json'), 'utf8'));
 
     try {
@@ -21,12 +20,15 @@ const seed = async () => {
         const collection = client.db(databaseName).collection('inventory');
         await collection.createIndex({ id: 1 }, { unique: true });
         
+        // FIX: Delete all old ghost records before inserting the fresh JSON
+        await collection.deleteMany({});
+        
         const operations = inventory.map(item => ({
             updateOne: { filter: { id: item.id }, update: { $set: item }, upsert: true }
         }));
         
         if (operations.length) await collection.bulkWrite(operations);
-        console.log(`Seeded ${inventory.length} inventory records into ${databaseName}.inventory.`);
+        console.log(`Cleared old data and seeded ${inventory.length} fresh inventory records into ${databaseName}.inventory.`);
     } finally {
         await client.close();
     }

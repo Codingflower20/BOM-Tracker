@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BOM Tracker</title>
+    <title>Lab Inventory</title>
     <style>
-        :root { --ink: #17202a; --muted: #68727d; --line: #d9e0e5; --blue: #1769aa; --blue-dark: #0d4775; --paper: #f7f9fa; }
+        :root { --ink: #17202a; --muted: #68727d; --line: #d9e0e5; --blue: #1769aa; --blue-dark: #0d4775; --paper: #f7f9fa; --red: #a44a4a; }
         * { box-sizing: border-box; }
         body { margin: 0; color: var(--ink); font-family: Georgia, 'Times New Roman', serif; background: radial-gradient(circle at top right, #dcecf4, transparent 36%), var(--paper); }
         main { max-width: 1180px; margin: 0 auto; padding: 44px 24px 64px; }
@@ -14,72 +14,174 @@
         .subtitle { margin: 0; }
         .toolbar, form { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
         .toolbar { margin-bottom: 24px; }
+        .admin-login { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; margin: 18px 0 26px; padding: 14px; background: #fff; border: 1px solid var(--line); border-radius: 4px; font-family: system-ui, sans-serif; }
+        .admin-login label { flex: 1 1 220px; }
+        .admin-login button { min-width: 86px; }
+        .login-status { color: var(--muted); font: .85rem system-ui, sans-serif; }
         label { display: grid; gap: 6px; color: var(--muted); font: 700 0.72rem system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase; }
         input, select, button { min-height: 42px; border: 1px solid var(--line); border-radius: 4px; padding: 0 12px; font: 1rem system-ui, sans-serif; }
         input:focus, select:focus { outline: 3px solid #b9d9ea; border-color: var(--blue); }
         #search { flex: 1 1 280px; }
-        button { border-color: var(--blue); background: var(--blue); color: white; cursor: pointer; font-weight: 700; }
+        button { border-color: var(--blue); background: var(--blue); color: white; cursor: pointer; font-weight: 700; transition: background 0.2s; }
         button:hover { background: var(--blue-dark); }
-        .panel { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 20px 0; margin-top: 36px; }
+        .panel { border-top: 1px solid var(--line); padding: 20px 0; margin-top: 36px; }
         .panel h2 { margin: 0 0 14px; font-size: 1.2rem; }
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
-        .card { background: rgba(255,255,255,.82); padding: 18px; border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 4px; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin-bottom: 36px; }
+        .card, .archive-card { background: rgba(255,255,255,.82); padding: 18px; border: 1px solid var(--line); border-radius: 4px; }
+        .card { border-left: 4px solid var(--blue); }
+        .archive-card { border-left: 4px solid var(--red); background: #fdfafb; }
         .card-top, .stock-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-        .card strong { font-size: 1.15rem; }
-        .loc-badge { color: var(--blue-dark); background: #e5f1f7; padding: 4px 8px; border-radius: 3px; font: 700 .75rem system-ui, sans-serif; }
+        .card-top input { width: 100%; font: 1.15rem Georgia, 'Times New Roman', serif; font-weight: 700; }
+        .location-input { width: 110px; min-height: 30px; padding: 0 7px; color: var(--blue-dark); background: #e5f1f7; font: 700 .75rem system-ui, sans-serif; }
         .meta { margin: 10px 0 18px; font-size: .85rem; }
         .stock-row { border-top: 1px solid var(--line); padding-top: 14px; }
         .stock-row input { width: 88px; min-height: 36px; }
         .stock-row button { min-height: 36px; padding: 0 10px; }
-        .status { min-height: 22px; margin: 14px 0 0; color: var(--blue-dark); font: 0.9rem system-ui, sans-serif; }
-        .empty { grid-column: 1 / -1; padding: 32px 0; }
+        .status { min-height: 22px; margin: 14px 0 0; color: var(--blue-dark); font: 0.9rem system-ui, sans-serif; font-weight: 700; }
+        .empty { grid-column: 1 / -1; padding: 12px 0; }
         @media (max-width: 640px) { main { padding: 28px 16px 48px; } header { display: block; } header .meta { margin-top: 12px; } form > label { flex: 1 1 140px; } }
     </style>
 </head>
 <body>
 
     <main>
-        <header><div><h1>IrriGreat inventory</h1><p class="subtitle">A quick view of every component and its storage location.</p></div><span id="count" class="meta"></span></header>
-        <div class="toolbar"><label for="search">Find a component</label><input id="search" type="search" placeholder="Search by name, ID, type, or location..."></div>
-        <div id="inventory-grid" class="grid-container"></div>
-        <section class="panel" aria-labelledby="add-title"><h2 id="add-title">Add component</h2><form id="add-form">
-            <label>Name <input name="name" required placeholder="e.g. 10k resistor"></label>
-            <label>Type <select name="type"><option>Component</option><option>Module</option></select></label>
-            <label>Stock <input name="quantity" type="number" min="0" step="1" value="0" required></label>
-            <label>Location <input name="location" required placeholder="e.g. 2-A-B"></label>
-            <button type="submit">Add component</button>
-        </form><div id="status" class="status" role="status" aria-live="polite"></div></section>
+        <header>
+            <div><h1>Lab inventory</h1><p class="subtitle">Component tracking and physical location registry.</p></div>
+            <span id="count" class="meta"></span>
+        </header>
+
+        <form id="login-form" class="admin-login">
+            <label>Admin password <input id="admin-password" type="password" autocomplete="current-password" required></label>
+            <button type="submit">Log in</button>
+            <span id="login-status" class="login-status">Log in to modify the database.</span>
+        </form>
+
+        <div class="toolbar">
+            <label for="search">Find a component</label>
+            <input id="search" type="search" placeholder="Search by name, ID, type, or location...">
+        </div>
+
+        <section aria-labelledby="active-title">
+            <h2 id="active-title" style="display:none;">Active Stock</h2>
+            <div id="inventory-grid" class="grid-container"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="archive-title">
+            <h2 id="archive-title">Out of stock (Ready for Restock)</h2>
+            <div id="archive-grid" class="grid-container"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="add-title">
+            <h2 id="add-title">Add brand new component</h2>
+            <form id="add-form">
+                <label>Name <input name="name" required placeholder="e.g. 10k resistor"></label>
+                <label>Type <select name="type"><option>Component</option><option>Module</option></select></label>
+                <label>Stock <input name="quantity" type="number" min="1" step="1" value="1" required></label>
+                <label>Location <input name="location" required placeholder="e.g. 2-A-B"></label>
+                <button type="submit">Add component</button>
+            </form>
+            <div id="status" class="status" role="status" aria-live="polite"></div>
+        </section>
     </main>
 
     <script>
         let inventory = [];
         const grid = document.getElementById('inventory-grid');
+        const archiveGrid = document.getElementById('archive-grid');
         const search = document.getElementById('search');
         const status = document.getElementById('status');
-        const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
-        const normalizeSearch = value => String(value).toLowerCase().trim().replace(/(^|[^\d])\.(?=\d)/g, '$10.').replace(/[^a-z0-9.]/g, '');
+        let adminPassword = '';
+
+        const escapeHtml = value => String(value).replace(/[&<>'"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[c]));
+        const normalizeSearch = value => String(value).toLowerCase().trim();
+
+        const generateCard = (item, isArchived) => `
+            <article class="${isArchived ? 'archive-card' : 'card'}">
+                <div class="card-top">
+                    <input class="name-input" aria-label="Name" value="${escapeHtml(item.name)}" data-id="${item.id}">
+                    <input class="location-input" aria-label="Location" value="${isArchived ? '' : escapeHtml(item.location)}" placeholder="${isArchived ? 'New Loc' : ''}" data-id="${item.id}">
+                </div>
+                <div class="meta">${escapeHtml(item.id)} · ${escapeHtml(item.type)}</div>
+                <div class="stock-row">
+                    <label>Stock <input class="stock-input" type="number" min="0" step="1" value="${item.quantity}" data-id="${item.id}"></label>
+                    <button class="update-stock" data-id="${item.id}">${isArchived ? 'Restock' : 'Update'}</button>
+                </div>
+            </article>
+        `;
+
         const render = () => {
             const term = normalizeSearch(search.value);
-            const visible = inventory.filter(item => Object.values(item).some(value => normalizeSearch(value).includes(term)));
-            document.getElementById('count').textContent = `${visible.length} of ${inventory.length} records`;
-            grid.innerHTML = visible.length ? visible.map(item => `<article class="card"><div class="card-top"><strong>${escapeHtml(item.name)}</strong><span class="loc-badge">${escapeHtml(item.location)}</span></div><div class="meta">${escapeHtml(item.id)} · ${escapeHtml(item.type)}</div><div class="stock-row"><label for="stock-${item.id}">Stock <input id="stock-${item.id}" class="stock-input" type="number" min="0" step="1" value="${item.quantity}" data-id="${item.id}"></label><button class="update-stock" data-id="${item.id}">Update</button></div></article>`).join('') : '<p class="empty">No matching components found.</p>';
+            const visible = inventory.filter(item => Object.values(item).some(val => normalizeSearch(val).includes(term)));
+            
+            const active = visible.filter(item => item.quantity > 0);
+            const archived = visible.filter(item => item.quantity === 0);
+
+            document.getElementById('count').textContent = `${visible.length} total records`;
+            
+            grid.innerHTML = active.length ? active.map(item => generateCard(item, false)).join('') : '<p class="empty">No active components found.</p>';
+            archiveGrid.innerHTML = archived.length ? archived.map(item => generateCard(item, true)).join('') : '<p class="empty">No depleted stock.</p>';
         };
-        const load = () => fetch('/api/inventory').then(response => response.json()).then(data => { inventory = data; render(); });
+
+        const load = () => fetch('/api/inventory').then(res => res.json()).then(data => { inventory = data; render(); });
+
+        document.getElementById('login-form').addEventListener('submit', e => {
+            e.preventDefault();
+            adminPassword = document.getElementById('admin-password').value;
+            document.getElementById('login-status').textContent = 'Admin credentials applied.';
+        });
+
         search.addEventListener('input', render);
-        grid.addEventListener('click', event => {
-            if (!event.target.classList.contains('update-stock')) return;
-            const id = event.target.dataset.id;
-            const input = grid.querySelector(`[data-id="${id}"]`);
-            fetch(`/api/inventory/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ quantity: Number(input.value) }) }).then(response => response.json().then(data => ({ ok: response.ok, data }))).then(({ ok, data }) => { if (!ok) throw new Error(data.error); inventory = inventory.map(item => item.id === id ? data : item); status.textContent = `${data.name} stock updated.`; render(); }).catch(error => { status.textContent = error.message; });
+
+        document.addEventListener('click', async e => {
+            if (!e.target.classList.contains('update-stock')) return;
+            const id = e.target.dataset.id;
+            const context = e.target.closest('article');
+            const quantity = Number(context.querySelector('.stock-input').value);
+            const name = context.querySelector('.name-input').value;
+            const location = context.querySelector('.location-input').value;
+
+            if (quantity < 0) return status.textContent = 'Stock cannot be negative.';
+
+            try {
+                const res = await fetch(`/api/inventory/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+                    body: JSON.stringify({ name, location, quantity })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error);
+                
+                inventory = inventory.map(item => item.id === id ? data : item);
+                status.textContent = quantity === 0 ? `${data.name} depleted. Location released.` : `${data.name} successfully updated.`;
+                render();
+            } catch (error) {
+                status.textContent = error.message;
+            }
         });
-        document.getElementById('add-form').addEventListener('submit', event => {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const payload = Object.fromEntries(formData.entries());
-            payload.quantity = Number(payload.quantity);
-            fetch('/api/inventory', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).then(response => response.json().then(data => ({ ok: response.ok, data }))).then(({ ok, data }) => { if (!ok) throw new Error(data.error); inventory.push(data); event.target.reset(); event.target.quantity.value = 0; status.textContent = `${data.name} added as ${data.id}.`; render(); }).catch(error => { status.textContent = error.message; });
+
+        document.getElementById('add-form').addEventListener('submit', async e => {
+            e.preventDefault();
+            const payload = Object.fromEntries(new FormData(e.target).entries());
+            
+            try {
+                const res = await fetch('/api/inventory', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error);
+                
+                inventory.push(data);
+                e.target.reset();
+                status.textContent = `${data.name} registered as ${data.id}.`;
+                render();
+            } catch (error) {
+                status.textContent = error.message;
+            }
         });
-        load().catch(() => { status.textContent = 'Could not load inventory.'; });
+
+        load().catch(() => status.textContent = 'Database connection failed.');
     </script>
 </body>
 </html>
