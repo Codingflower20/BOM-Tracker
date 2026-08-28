@@ -1,0 +1,436 @@
+[
+  {
+    "id": "CMP-001",
+    "name": "0.1nF TH",
+    "type": "Component",
+    "quantity": 10,
+    "location": "1-A-A"
+  },
+  {
+    "id": "CMP-002",
+    "name": "1.2V LDO",
+    "type": "Component",
+    "quantity": 6,
+    "location": "1-A-B"
+  },
+  {
+    "id": "CMP-003",
+    "name": "100k",
+    "type": "Component",
+    "quantity": 60,
+    "location": "1-A-C"
+  },
+  {
+    "id": "CMP-004",
+    "name": "100nF",
+    "type": "Component",
+    "quantity": 75,
+    "location": "1-A-D"
+  },
+  {
+    "id": "CMP-005",
+    "name": "10k",
+    "type": "Component",
+    "quantity": 61,
+    "location": "1-A-E"
+  },
+  {
+    "id": "CMP-006",
+    "name": "10uF",
+    "type": "Component",
+    "quantity": 24,
+    "location": "1-A-F"
+  },
+  {
+    "id": "CMP-007",
+    "name": "150k",
+    "type": "Component",
+    "quantity": 57,
+    "location": "1-A-G"
+  },
+  {
+    "id": "CMP-008",
+    "name": "1k",
+    "type": "Component",
+    "quantity": 47,
+    "location": "1-A-H"
+  },
+  {
+    "id": "CMP-009",
+    "name": "1N4148",
+    "type": "Component",
+    "quantity": 10,
+    "location": "1-A-I"
+  },
+  {
+    "id": "CMP-010",
+    "name": "1uF",
+    "type": "Component",
+    "quantity": 61,
+    "location": "1-A-J"
+  },
+  {
+    "id": "CMP-011",
+    "name": "22uF",
+    "type": "Component",
+    "quantity": 8,
+    "location": "1-A-K"
+  },
+  {
+    "id": "CMP-012",
+    "name": "22uH",
+    "type": "Component",
+    "quantity": 6,
+    "location": "1-A-L"
+  },
+  {
+    "id": "CMP-013",
+    "name": "270uF",
+    "type": "Component",
+    "quantity": 14,
+    "location": "1-A-M"
+  },
+  {
+    "id": "CMP-014",
+    "name": "2N7002",
+    "type": "Component",
+    "quantity": 10,
+    "location": "1-A-N"
+  },
+  {
+    "id": "CMP-015",
+    "name": "4.7uH",
+    "type": "Component",
+    "quantity": 11,
+    "location": "1-A-O"
+  },
+  {
+    "id": "CMP-016",
+    "name": "8205A",
+    "type": "Component",
+    "quantity": 4,
+    "location": "1-A-P"
+  },
+  {
+    "id": "CMP-017",
+    "name": "ADS1115",
+    "type": "Component",
+    "quantity": 5,
+    "location": "1-B-A"
+  },
+  {
+    "id": "CMP-018",
+    "name": "AHT25",
+    "type": "Component",
+    "quantity": 6,
+    "location": "1-B-B"
+  },
+  {
+    "id": "CMP-019",
+    "name": "AO3401",
+    "type": "Component",
+    "quantity": 17,
+    "location": "1-B-C"
+  },
+  {
+    "id": "CMP-020",
+    "name": "BJT-MMBT",
+    "type": "Component",
+    "quantity": 25,
+    "location": "1-B-D"
+  },
+  {
+    "id": "CMP-021",
+    "name": "BME280",
+    "type": "Component",
+    "quantity": 6,
+    "location": "1-B-E"
+  },
+  {
+    "id": "CMP-022",
+    "name": "BMP280",
+    "type": "Component",
+    "quantity": 6,
+    "location": "1-B-F"
+  },
+  {
+    "id": "CMP-023",
+    "name": "CH340C",
+    "type": "Component",
+    "quantity": 4,
+    "location": "1-B-G"
+  },
+  {
+    "id": "CMP-024",
+    "name": "CH340K",
+    "type": "Component",
+    "quantity": 11,
+    "location": "1-B-H"
+  },
+  {
+    "id": "CMP-025",
+    "name": "DW01A",
+    "type": "Component",
+    "quantity": 8,
+    "location": "1-B-I"
+  },
+  {
+    "id": "CMP-026",
+    "name": "ESP32",
+    "type": "Component",
+    "quantity": 3,
+    "location": "1-B-J"
+  },
+  {
+    "id": "CMP-027",
+    "name": "FUSE- 1A",
+    "type": "Component",
+    "quantity": 6,
+    "location": "1-B-K"
+  },
+  {
+    "id": "CMP-028",
+    "name": "HC4051",
+    "type": "Component",
+    "quantity": 15,
+    "location": "1-B-L"
+  },
+  {
+    "id": "CMP-029",
+    "name": "HT7333",
+    "type": "Component",
+    "quantity": 11,
+    "location": "1-B-M"
+  },
+  {
+    "id": "CMP-030",
+    "name": "IRFZ44N",
+    "type": "Component",
+    "quantity": 1,
+    "location": "1-B-N"
+  },
+  {
+    "id": "CMP-031",
+    "name": "LM358",
+    "type": "Component",
+    "quantity": 9,
+    "location": "1-B-O"
+  },
+  {
+    "id": "CMP-032",
+    "name": "MAX485",
+    "type": "Component",
+    "quantity": 11,
+    "location": "1-B-P"
+  },
+  {
+    "id": "CMP-033",
+    "name": "MP1584",
+    "type": "Component",
+    "quantity": 5,
+    "location": "1-C-A"
+  },
+  {
+    "id": "CMP-034",
+    "name": "MT3608",
+    "type": "Component",
+    "quantity": 4,
+    "location": "1-C-B"
+  },
+  {
+    "id": "CMP-035",
+    "name": "NE555",
+    "type": "Component",
+    "quantity": 10,
+    "location": "1-C-C"
+  },
+  {
+    "id": "CMP-036",
+    "name": "OP07",
+    "type": "Component",
+    "quantity": 11,
+    "location": "1-C-D"
+  },
+  {
+    "id": "CMP-037",
+    "name": "PC817",
+    "type": "Component",
+    "quantity": 5,
+    "location": "1-C-E"
+  },
+  {
+    "id": "CMP-038",
+    "name": "Push btn",
+    "type": "Component",
+    "quantity": 34,
+    "location": "1-C-F"
+  },
+  {
+    "id": "CMP-039",
+    "name": "Relay 5v",
+    "type": "Component",
+    "quantity": 5,
+    "location": "1-C-G"
+  },
+  {
+    "id": "CMP-040",
+    "name": "RTC",
+    "type": "Component",
+    "quantity": 6,
+    "location": "1-C-H"
+  },
+  {
+    "id": "CMP-041",
+    "name": "SI2302",
+    "type": "Component",
+    "quantity": 23,
+    "location": "1-C-I"
+  },
+  {
+    "id": "CMP-042",
+    "name": "SS14",
+    "type": "Component",
+    "quantity": 14,
+    "location": "1-C-J"
+  },
+  {
+    "id": "CMP-043",
+    "name": "SS24",
+    "type": "Component",
+    "quantity": 13,
+    "location": "1-C-K"
+  },
+  {
+    "id": "CMP-044",
+    "name": "TC4056A",
+    "type": "Component",
+    "quantity": 14,
+    "location": "1-C-L"
+  },
+  {
+    "id": "CMP-045",
+    "name": "TP4056",
+    "type": "Component",
+    "quantity": 11,
+    "location": "1-C-M"
+  },
+  {
+    "id": "CMP-046",
+    "name": "Type C",
+    "type": "Component",
+    "quantity": 20,
+    "location": "1-C-N"
+  },
+  {
+    "id": "CMP-047",
+    "name": "WS2812",
+    "type": "Component",
+    "quantity": 10,
+    "location": "1-C-O"
+  },
+  {
+    "id": "CMP-048",
+    "name": "XL1509",
+    "type": "Component",
+    "quantity": 9,
+    "location": "1-C-P"
+  },
+  {
+    "id": "MOD-001",
+    "name": "ADS1115",
+    "type": "Module",
+    "quantity": 1,
+    "location": "1-D-A"
+  },
+  {
+    "id": "MOD-002",
+    "name": "MT3608",
+    "type": "Module",
+    "quantity": 3,
+    "location": "1-D-B"
+  },
+  {
+    "id": "MOD-003",
+    "name": "ESP32",
+    "type": "Module",
+    "quantity": 2,
+    "location": "1-D-C"
+  },
+  {
+    "id": "MOD-004",
+    "name": "Level Shifter",
+    "type": "Module",
+    "quantity": 4,
+    "location": "1-D-D"
+  },
+  {
+    "id": "MOD-005",
+    "name": "USB-C",
+    "type": "Module",
+    "quantity": 5,
+    "location": "1-D-E"
+  },
+  {
+    "id": "MOD-006",
+    "name": "Current Sensor",
+    "type": "Module",
+    "quantity": 2,
+    "location": "1-D-F"
+  },
+  {
+    "id": "MOD-007",
+    "name": "Zigbee",
+    "type": "Module",
+    "quantity": 2,
+    "location": "1-D-G"
+  },
+  {
+    "id": "MOD-008",
+    "name": "4s",
+    "type": "Module",
+    "quantity": 1,
+    "location": "1-D-H"
+  },
+  {
+    "id": "MOD-009",
+    "name": "3s",
+    "type": "Module",
+    "quantity": 1,
+    "location": "1-D-I"
+  },
+  {
+    "id": "MOD-010",
+    "name": "npk",
+    "type": "Module",
+    "quantity": 4,
+    "location": "1-D-J"
+  },
+  {
+    "id": "MOD-011",
+    "name": "ESP8266",
+    "type": "Module",
+    "quantity": 1,
+    "location": "1-D-K"
+  },
+  {
+    "id": "MOD-012",
+    "name": "Arduino uno",
+    "type": "Module",
+    "quantity": 1,
+    "location": "1-D-L"
+  },
+  {
+    "id": "MOD-013",
+    "name": "OLED",
+    "type": "Module",
+    "quantity": 1,
+    "location": "1-D-M"
+  },
+  {
+    "id": "MOD-014",
+    "name": "Cable tie",
+    "type": "Module",
+    "quantity": 100,
+    "location": "A1"
+  }
+]

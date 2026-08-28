@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BOM Tracker</title>
+    <style>
+        :root { --ink: #17202a; --muted: #68727d; --line: #d9e0e5; --blue: #1769aa; --blue-dark: #0d4775; --paper: #f7f9fa; }
+        * { box-sizing: border-box; }
+        body { margin: 0; color: var(--ink); font-family: Georgia, 'Times New Roman', serif; background: radial-gradient(circle at top right, #dcecf4, transparent 36%), var(--paper); }
+        main { max-width: 1180px; margin: 0 auto; padding: 44px 24px 64px; }
+        header { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 32px; }
+        h1 { margin: 0 0 8px; font-size: clamp(2rem, 5vw, 3.8rem); }
+        .subtitle, .meta, .empty { color: var(--muted); font-family: system-ui, sans-serif; }
+        .subtitle { margin: 0; }
+        .toolbar, form { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+        .toolbar { margin-bottom: 24px; }
+        label { display: grid; gap: 6px; color: var(--muted); font: 700 0.72rem system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+        input, select, button { min-height: 42px; border: 1px solid var(--line); border-radius: 4px; padding: 0 12px; font: 1rem system-ui, sans-serif; }
+        input:focus, select:focus { outline: 3px solid #b9d9ea; border-color: var(--blue); }
+        #search { flex: 1 1 280px; }
+        button { border-color: var(--blue); background: var(--blue); color: white; cursor: pointer; font-weight: 700; }
+        button:hover { background: var(--blue-dark); }
+        .panel { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 20px 0; margin-top: 36px; }
+        .panel h2 { margin: 0 0 14px; font-size: 1.2rem; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+        .card { background: rgba(255,255,255,.82); padding: 18px; border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 4px; }
+        .card-top, .stock-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .card strong { font-size: 1.15rem; }
+        .loc-badge { color: var(--blue-dark); background: #e5f1f7; padding: 4px 8px; border-radius: 3px; font: 700 .75rem system-ui, sans-serif; }
+        .meta { margin: 10px 0 18px; font-size: .85rem; }
+        .stock-row { border-top: 1px solid var(--line); padding-top: 14px; }
+        .stock-row input { width: 88px; min-height: 36px; }
+        .stock-row button { min-height: 36px; padding: 0 10px; }
+        .status { min-height: 22px; margin: 14px 0 0; color: var(--blue-dark); font: 0.9rem system-ui, sans-serif; }
+        .empty { grid-column: 1 / -1; padding: 32px 0; }
+        @media (max-width: 640px) { main { padding: 28px 16px 48px; } header { display: block; } header .meta { margin-top: 12px; } form > label { flex: 1 1 140px; } }
+    </style>
+</head>
+<body>
+
+    <main>
+        <header><div><h1>Lab inventory</h1><p class="subtitle">A quick view of every component and its storage location.</p></div><span id="count" class="meta"></span></header>
+        <div class="toolbar"><label for="search">Find a component</label><input id="search" type="search" placeholder="Search by name, ID, type, or location..."></div>
+        <div id="inventory-grid" class="grid-container"></div>
+        <section class="panel" aria-labelledby="add-title"><h2 id="add-title">Add component</h2><form id="add-form">
+            <label>Name <input name="name" required placeholder="e.g. 10k resistor"></label>
+            <label>Type <select name="type"><option>Component</option><option>Module</option></select></label>
+            <label>Stock <input name="quantity" type="number" min="0" step="1" value="0" required></label>
+            <label>Location <input name="location" required placeholder="e.g. 2-A-B"></label>
+            <button type="submit">Add component</button>
+        </form><div id="status" class="status" role="status" aria-live="polite"></div></section>
+    </main>
+
+    <script>
+        let inventory = [];
+        const grid = document.getElementById('inventory-grid');
+        const search = document.getElementById('search');
+        const status = document.getElementById('status');
+        const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+        const normalizeSearch = value => String(value).toLowerCase().trim().replace(/(^|[^\d])\.(?=\d)/g, '$10.').replace(/[^a-z0-9.]/g, '');
+        const render = () => {
+            const term = normalizeSearch(search.value);
+            const visible = inventory.filter(item => Object.values(item).some(value => normalizeSearch(value).includes(term)));
+            document.getElementById('count').textContent = `${visible.length} of ${inventory.length} records`;
+            grid.innerHTML = visible.length ? visible.map(item => `<article class="card"><div class="card-top"><strong>${escapeHtml(item.name)}</strong><span class="loc-badge">${escapeHtml(item.location)}</span></div><div class="meta">${escapeHtml(item.id)} · ${escapeHtml(item.type)}</div><div class="stock-row"><label for="stock-${item.id}">Stock <input id="stock-${item.id}" class="stock-input" type="number" min="0" step="1" value="${item.quantity}" data-id="${item.id}"></label><button class="update-stock" data-id="${item.id}">Update</button></div></article>`).join('') : '<p class="empty">No matching components found.</p>';
+        };
+        const load = () => fetch('/api/inventory').then(response => response.json()).then(data => { inventory = data; render(); });
+        search.addEventListener('input', render);
+        grid.addEventListener('click', event => {
+            if (!event.target.classList.contains('update-stock')) return;
+            const id = event.target.dataset.id;
+            const input = grid.querySelector(`[data-id="${id}"]`);
+            fetch(`/api/inventory/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ quantity: Number(input.value) }) }).then(response => response.json().then(data => ({ ok: response.ok, data }))).then(({ ok, data }) => { if (!ok) throw new Error(data.error); inventory = inventory.map(item => item.id === id ? data : item); status.textContent = `${data.name} stock updated.`; render(); }).catch(error => { status.textContent = error.message; });
+        });
+        document.getElementById('add-form').addEventListener('submit', event => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const payload = Object.fromEntries(formData.entries());
+            payload.quantity = Number(payload.quantity);
+            fetch('/api/inventory', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).then(response => response.json().then(data => ({ ok: response.ok, data }))).then(({ ok, data }) => { if (!ok) throw new Error(data.error); inventory.push(data); event.target.reset(); event.target.quantity.value = 0; status.textContent = `${data.name} added as ${data.id}.`; render(); }).catch(error => { status.textContent = error.message; });
+        });
+        load().catch(() => { status.textContent = 'Could not load inventory.'; });
+    </script>
+</body>
+</html>
