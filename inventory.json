@@ -38,7 +38,7 @@
     "id": "CMP-006",
     "name": "10uF",
     "type": "Component",
-    "quantity": 24,
+    "quantity": 34,
     "location": "1-A-F"
   },
   {
@@ -66,14 +66,14 @@
     "id": "CMP-010",
     "name": "1uF",
     "type": "Component",
-    "quantity": 61,
+    "quantity": 101,
     "location": "1-A-J"
   },
   {
     "id": "CMP-011",
     "name": "22uF",
     "type": "Component",
-    "quantity": 8,
+    "quantity": 18,
     "location": "1-A-K"
   },
   {
@@ -171,7 +171,7 @@
     "id": "CMP-025",
     "name": "DW01A",
     "type": "Component",
-    "quantity": 8,
+    "quantity": 4,
     "location": "1-B-I"
   },
   {
@@ -290,7 +290,7 @@
     "id": "CMP-042",
     "name": "SS14",
     "type": "Component",
-    "quantity": 14,
+    "quantity": 18,
     "location": "1-C-J"
   },
   {
@@ -311,7 +311,7 @@
     "id": "CMP-045",
     "name": "TP4056",
     "type": "Component",
-    "quantity": 11,
+    "quantity": 6,
     "location": "1-C-M"
   },
   {
@@ -432,5 +432,180 @@
     "type": "Module",
     "quantity": 100,
     "location": "A1"
+  },
+  {
+    "id": "CMP-049",
+    "name": "CN3791",
+    "type": "Component",
+    "quantity": 6,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-050",
+    "name": "connector-MF pair",
+    "type": "Component",
+    "quantity": 99,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-051",
+    "name": "crystal oscillator",
+    "type": "Component",
+    "quantity": 5,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-052",
+    "name": "esp12f",
+    "type": "Component",
+    "quantity": 4,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-053",
+    "name": "flash 32Mbit",
+    "type": "Component",
+    "quantity": 6,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-054",
+    "name": "HT7833",
+    "type": "Component",
+    "quantity": 22,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-055",
+    "name": "IC555",
+    "type": "Component",
+    "quantity": 16,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-056",
+    "name": "Inverter(74HC14)",
+    "type": "Component",
+    "quantity": 6,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-057",
+    "name": "LDR",
+    "type": "Component",
+    "quantity": 11,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-058",
+    "name": "Max3485",
+    "type": "Component",
+    "quantity": 6,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-059",
+    "name": "momentary switch",
+    "type": "Component",
+    "quantity": 7,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-060",
+    "name": "motor driver",
+    "type": "Component",
+    "quantity": 5,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-061",
+    "name": "MT3608L",
+    "type": "Component",
+    "quantity": 12,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-062",
+    "name": "neopixel",
+    "type": "Component",
+    "quantity": 8,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-063",
+    "name": "op-amp(TLV9002)",
+    "type": "Component",
+    "quantity": 6,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-064",
+    "name": "Push Button",
+    "type": "Component",
+    "quantity": 12,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-065",
+    "name": "red led",
+    "type": "Component",
+    "quantity": 23,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-066",
+    "name": "relay",
+    "type": "Component",
+    "quantity": 10,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-067",
+    "name": "Thejas",
+    "type": "Component",
+    "quantity": 6,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-068",
+    "name": "TVS diode",
+    "type": "Component",
+    "quantity": 6,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-069",
+    "name": "white led",
+    "type": "Component",
+    "quantity": 27,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-070",
+    "name": "yellow led",
+    "type": "Component",
+    "quantity": 11,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-071",
+    "name": "33mH DIP",
+    "type": "Component",
+    "quantity": 5,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-072",
+    "name": "Condenser microphone",
+    "type": "Component",
+    "quantity": 5,
+    "location": "Unassigned"
+  },
+  {
+    "id": "CMP-073",
+    "name": "10mH DIP",
+    "type": "Component",
+    "quantity": 1,
+    "location": "Unassigned"
   }
 ]
