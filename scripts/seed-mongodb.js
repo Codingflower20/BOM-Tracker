@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const { MongoClient } = require('mongodb');
@@ -12,15 +13,18 @@ if (!uri) {
 
 const seed = async () => {
     const client = new MongoClient(uri);
+    // Reads the inventory.json file from your main folder
     const inventory = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'inventory.json'), 'utf8'));
 
     try {
         await client.connect();
         const collection = client.db(databaseName).collection('inventory');
         await collection.createIndex({ id: 1 }, { unique: true });
+        
         const operations = inventory.map(item => ({
             updateOne: { filter: { id: item.id }, update: { $set: item }, upsert: true }
         }));
+        
         if (operations.length) await collection.bulkWrite(operations);
         console.log(`Seeded ${inventory.length} inventory records into ${databaseName}.inventory.`);
     } finally {
