@@ -1,13 +1,18 @@
 require('dotenv').config();
-
 const express = require('express');
 const { MongoClient } = require('mongodb');
+const path = require('path');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON and serve the frontend files
 app.use(express.json());
 app.use(express.static('public'));
+
+// FIX: Explicitly serve the frontend UI for Vercel
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 const mongoUri = process.env.MONGODB_URI;
 const databaseName = process.env.MONGODB_DB || 'bom_tracker';
@@ -38,6 +43,7 @@ app.get('/api/inventory', async (req, res) => {
     }
 });
 
+// POST endpoint to add a new component
 app.post('/api/inventory', async (req, res) => {
     const { name, type = 'Component', quantity, location } = req.body;
     const parsedQuantity = Number(quantity);
@@ -59,6 +65,7 @@ app.post('/api/inventory', async (req, res) => {
     }
 });
 
+// PATCH endpoint to update stock quantity
 app.patch('/api/inventory/:id', async (req, res) => {
     const parsedQuantity = Number(req.body.quantity);
     if (!Number.isInteger(parsedQuantity) || parsedQuantity < 0) {
@@ -78,10 +85,12 @@ app.patch('/api/inventory/:id', async (req, res) => {
     }
 });
 
+// Start the server locally (ignored by Vercel)
 if (require.main === module) {
     app.listen(PORT, '0.0.0.0', () => {
         console.log(`BOM Tracker running at http://localhost:${PORT}`);
     });
 }
 
+// Export for Vercel Serverless Functions
 module.exports = app;
